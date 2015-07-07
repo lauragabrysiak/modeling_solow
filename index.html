@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Solow model by gralgomez</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Solow model</h1>
+      <h2 class="project-tagline">Revision of the Solow growth model in R</h2>
+      <a href="https://github.com/gralgomez/Solow_Model_R" class="btn">View on GitHub</a>
+      <a href="https://github.com/gralgomez/Solow_Model_R/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/gralgomez/Solow_Model_R/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h1>
+
+<p>This project aims to revisit the Solow economic growth model. The approach is based on the findings of the paper written by Mankiw, Romer and Weil 1992. In this paper, Mankiv et al. examine the theoretical implications of the Solow model empirically with a 25 years time span [1960-1985] data set from the Penn World Tables (Summer &amp; Heston 1988). Furthermore they create a so called "augmented Solow model" including human- and physical capital accumulation which are not included in the original Solow model (1956).  </p>
+
+<p>This projects recreates the augmented Solow model in R and extends the empirical data to a time span from 1986-2010.</p>
+
+<h1>
+<a id="theorical-part" class="anchor" href="#theorical-part" aria-hidden="true"><span class="octicon octicon-link"></span></a>Theorical Part</h1>
+
+<h2>
+<a id="theory-of-the-model" class="anchor" href="#theory-of-the-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Theory of the model</h2>
+
+<h3>
+<a id="original-solow-model" class="anchor" href="#original-solow-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Original Solow model</h3>
+
+<p>The Solow–Swan model is an exogenous growth model, an economic model of long-run economic growth set within the framework of neoclassical economics. It attempts to explain long-run economic growth by looking at a production function (Y(t)) defined by: 1-capital accumulation (k(t)), 2-labor or population growth (L), and 3-increases in productivity, commonly referred to as technological progress (A).</p>
+
+<ul>
+<li>Y(t) = K(t)^alfa (A(t) * L(t))^alfa - 1,  and (0 &lt; alfa &lt; 1)</li>
+</ul>
+
+<h3>
+<a id="enhanced-solow-model" class="anchor" href="#enhanced-solow-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Enhanced Solow model</h3>
+
+<ul>
+<li>ln(Y/L) = alfa + alfa/(1-alfa)ln(s) - alfa/(a-alfa)ln(n + g + delta) + epsilon.</li>
+</ul>
+
+<p>Where:</p>
+
+<ul>
+<li>Y: Real GDP</li>
+<li>alfa:</li>
+<li>delta:</li>
+<li>epsilon:</li>
+<li>A: Technological progress</li>
+<li>S: 1 - share of household consumption-share of government consumption</li>
+<li>n: average number of persons engaged in millions between 1960 - 1985</li>
+<li>G: average growth rate between 1986 -2010</li>
+<li>L: working age population. Obtained by merging total population and share of working-age population obtained from world development report i.e WDI.</li>
+<li>ln(Y/L): (Y.1)</li>
+</ul>
+
+<h2>
+<a id="data-and-samples" class="anchor" href="#data-and-samples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data and Samples</h2>
+
+<p>For the empirical testing of the original Solow model the Penn World Table is used. </p>
+
+<p>Original model variables:</p>
+
+<ul>
+<li>Capital accumulation (k(t))</li>
+<li>Labor or population growth (L)</li>
+<li>Technological progress (A)</li>
+</ul>
+
+<p>Augmented model variables (+ those of the original model):</p>
+
+<ul>
+<li>Human capital accumulation (H) Given by education. In order to obtain this information we followed the Wood (2013) approach: calculate total percentage of secondary school enrollment from UNESCO Education statistics divided by share of working age population.</li>
+<li>Physical capital accumulation (P)</li>
+</ul>
+
+<p>Further, Mankiw, Romer and Weil (1992) differentiate between three main country groups which are put into comparison: </p>
+
+<ul>
+<li>OECD countries: (22 countries) Countries members of the Organisation for Economic Co-operation and Development.(<a href="http://www.oecd.org/)This">http://www.oecd.org/)This</a> sample has the advantage that is mostly of high quality and that the variation in omitted country-specific factors is likely to be small. But it has the disadvantages that it is small in size and that it
+discard much of the variation in the variables of interest.</li>
+<li>Non-Oil countries: These countries were selected other than Oil countries, mostly because the data was available. Oil countries were excluded since their GDP represents mostly the extraction of existing resources and not value added.</li>
+<li>Intermediate Economies (IE): (75 countries) Countries with grade of "D" from Summers and Heston (1988) or whose populations in 1960 were less than one million. Summers and Heston use the "D" grade to identify countries whose real income figures are based on extremely little primary data; measurement error is likely to be a greater problem for these countries. </li>
+</ul>
+
+<h3>
+<a id="data-sources" class="anchor" href="#data-sources" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Sources:</h3>
+
+<p>In order to extract and aggregate the previously mentioned variables according to the model(s) to be tested, following data sources have been used:</p>
+
+<ul>
+<li>
+<strong>PWT (Penn World Table)</strong> - The Penn World Table (PWT) provides purchasing power parity and national income accounts converted to international prices for 189 countries/territories for some or all of the years 1950-2010. The dataset was collected by Summer &amp; Heston (1988). This dataset represents our main data source.</li>
+<li>
+<strong>WDI (World Bank data)</strong> - The World Bank data is the primary World Bank collection of development indicators, compiled from officially-recognized international sources. It presents the most current and accurate global development data available, and includes national, regional and global estimates. This dataset was used in order to extract the share of working-age population which wasn't represented in the PWT dataset. </li>
+<li>
+<strong>WRW, TTW (UNESCO data base)</strong> - Gross enrollment ratio (pre-primary, primary, lower secondary, upper secondary, tertiary). This information was used to enhance the original Solow Model as the human capital accumulation.</li>
+</ul>
+
+<h2>
+<a id="findings--conclusions-so-far" class="anchor" href="#findings--conclusions-so-far" aria-hidden="true"><span class="octicon octicon-link"></span></a>Findings &amp; Conclusions (so far)</h2>
+
+<ul>
+<li>Model predictions concur with the empirical evidence</li>
+<li>Construction of an additional variable to account for the impact of human capital formation</li>
+<li>Test for conditional and unconditional convergence</li>
+<li>Finding: Omitting human capital accumulation biases the estimated coefficients on saving and population growth</li>
+</ul>
+
+<h1>
+<a id="implementation-in-r" class="anchor" href="#implementation-in-r" aria-hidden="true"><span class="octicon octicon-link"></span></a>Implementation in R</h1>
+
+<h2>
+<a id="procedure-of-the-project" class="anchor" href="#procedure-of-the-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>Procedure of the project</h2>
+
+<ol>
+<li>Data collection and preparation</li>
+<li>Recreation of the original Solow Model [1960-1985]</li>
+<li>Recreation of the augmented Solow Model [1960-1985]</li>
+<li>Expansion of the empirical evidence [1985-2010]</li>
+</ol>
+
+<h2>
+<a id="data-collection-and-preparation" class="anchor" href="#data-collection-and-preparation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data collection and preparation</h2>
+
+<p>Packages: pwt8, pwt7.1</p>
+
+<h2>
+<a id="recreation-of-the-original-solow-model" class="anchor" href="#recreation-of-the-original-solow-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Recreation of the original Solow Model</h2>
+
+<h2>
+<a id="recreation-of-the-augmented-solow-model" class="anchor" href="#recreation-of-the-augmented-solow-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Recreation of the augmented Solow Model</h2>
+
+<h1>
+<a id="sources" class="anchor" href="#sources" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sources</h1>
+
+<ol>
+<li>Mankiw, Romer and Weil (1992): <a href="http://eml.berkeley.edu/%7Edromer/papers/MRW_QJE1992.pdf">http://eml.berkeley.edu/~dromer/papers/MRW_QJE1992.pdf</a>
+</li>
+<li>Solow &amp; Swan (1956): <a href="http://piketty.pse.ens.fr/files/Solow1956.pdf">http://piketty.pse.ens.fr/files/Solow1956.pdf</a>
+</li>
+<li>PWT: <a href="https://pwt.sas.upenn.edu/">https://pwt.sas.upenn.edu/</a>
+</li>
+<li>WDI: <a href="http://data.worldbank.org/data-catalog/world-development-indicators">http://data.worldbank.org/data-catalog/world-development-indicators</a>
+</li>
+<li>PWT 7.1: Alan Heston, Robert Summers and Bettina Aten, Penn World Table Version 7.1, Center for International Comparisons of Production, Income and Prices at the University of Pennsylvania, Nov 2012.</li>
+</ol>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/gralgomez/Solow_Model_R">Solow model</a> is maintained by <a href="https://github.com/gralgomez">gralgomez</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-64867221-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
+
